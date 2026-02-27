@@ -1,8 +1,8 @@
 {
     "version": 2,
     "framework": null,
+    "installCommand": "composer install --no-dev --optimize-autoloader",
     "buildCommand": "",
-    "outputDirectory": "public",
     "functions": {
         "api/index.php": {
             "runtime": "vercel-php@0.7.2"
@@ -23,8 +23,11 @@
         }
     ],
     "env": {
+        "APP_NAME": "Financial Planner",
         "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_DEBUG": "true",
+        "APP_KEY": "base64:LoXgoQpF1bzInJPcGf+RwXs1Z7uZmwcUX+2LPPYEzNE=",
+        "APP_URL": "https://fincancial-planner-a1h4hohxq-vincento1991s-projects.vercel.app",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
