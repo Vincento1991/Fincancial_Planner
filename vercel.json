@@ -1,33 +1,30 @@
 {
     "version": 2,
     "framework": null,
-    "installCommand": "composer install --no-dev --optimize-autoloader",
+    "installCommand": "",
     "buildCommand": "",
+    "outputDirectory": ".",
     "functions": {
         "api/index.php": {
-            "runtime": "vercel-php@0.7.2"
+            "runtime": "vercel-php@0.7.2",
+            "includeFiles": "**"
         }
     },
     "routes": [
-        {
-            "src": "/(css|js|images|fonts|favicon\\.ico)(.*)",
-            "dest": "/public/$1$2"
-        },
-        {
-            "src": "/build/(.*)",
-            "dest": "/public/build/$1"
-        },
         {
             "src": "/(.*)",
             "dest": "/api/index.php"
         }
     ],
     "env": {
+        "VERCEL": "1",
         "APP_NAME": "Financial Planner",
         "APP_ENV": "production",
         "APP_DEBUG": "true",
         "APP_KEY": "base64:LoXgoQpF1bzInJPcGf+RwXs1Z7uZmwcUX+2LPPYEzNE=",
         "APP_URL": "https://fincancial-planner-a1h4hohxq-vincento1991s-projects.vercel.app",
+        "DB_CONNECTION": "sqlite",
+        "DB_DATABASE": "/tmp/database.sqlite",
         "APP_CONFIG_CACHE": "/tmp/config.php",
         "APP_EVENTS_CACHE": "/tmp/events.php",
         "APP_PACKAGES_CACHE": "/tmp/packages.php",
@@ -35,7 +32,9 @@
         "APP_SERVICES_CACHE": "/tmp/services.php",
         "VIEW_COMPILED_PATH": "/tmp/views",
         "CACHE_STORE": "array",
+        "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "array",
+        "QUEUE_CONNECTION": "sync"
     }
 }
