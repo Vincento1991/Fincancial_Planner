@@ -154,11 +154,12 @@ class CashflowController extends Controller
      */
     private function parseAmount($raw): float
     {
-        if (is_numeric($raw)) return (float) $raw;
+        $str = trim((string) $raw);
+        if ($str === '' || $str === '0') return 0;
 
-        $str = (string) $raw;
         // Remove Rp prefix
         $str = preg_replace('/^[Rr][Pp]\.?\s*/', '', $str);
+
         // If contains both dots and commas, determine format
         if (str_contains($str, '.') && str_contains($str, ',')) {
             // 5.000.000,00  → ID format
@@ -169,9 +170,10 @@ class CashflowController extends Controller
             $parts = explode('.', $str);
             $lastPart = end($parts);
             if (count($parts) > 2 || strlen($lastPart) == 3) {
-                // Thousand separator
+                // Thousand separator (e.g. 189.000 or 1.000.000)
                 $str = str_replace('.', '', $str);
             }
+            // else: true decimal like 5000.50
         } elseif (str_contains($str, ',')) {
             // 5,000,000 or 5000,50
             $parts = explode(',', $str);

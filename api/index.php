@@ -76,4 +76,15 @@ if (!file_exists($dbPath)) {
 }
 
 // Forward to Laravel
-require __DIR__ . '/../public/index.php';
+try {
+    require __DIR__ . '/../public/index.php';
+} catch (\Throwable $e) {
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => $e->getMessage(),
+        'file'  => $e->getFile() . ':' . $e->getLine(),
+        'trace' => array_slice(explode("\n", $e->getTraceAsString()), 0, 10),
+    ]);
+    exit(1);
+}

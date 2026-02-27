@@ -3,6 +3,10 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
+use Illuminate\Session\Middleware\StartSession;
+use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 
 $app = Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +15,13 @@ $app = Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Remove session-dependent middleware — they don't work on serverless
+        $middleware->remove([
+            StartSession::class,
+            ShareErrorsFromSession::class,
+            VerifyCsrfToken::class,
+            AddQueuedCookiesToResponse::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
